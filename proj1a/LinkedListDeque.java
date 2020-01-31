@@ -1,13 +1,13 @@
-public class LinkedListDeque<Type>{
+public class LinkedListDeque<T>{
     /**
      * deque: double-ended-queue
      * */
     private class Node{
-        private Type item;
+        private T item;
         private Node prev;
         private Node next;
 
-        private Node(Node p, Type i, Node n){
+        private Node(Node p, T i, Node n){
             item = i;
             prev = p;
             next = n;
@@ -36,7 +36,7 @@ public class LinkedListDeque<Type>{
     }
 
     /*Constructor*/
-    public LinkedListDeque(Type x){
+    public LinkedListDeque(T x){
         size = 1;
         Ssentinel.prev = Esentinel;
         Esentinel.next = Ssentinel;
@@ -61,13 +61,13 @@ public class LinkedListDeque<Type>{
     }
 
 
-    public void addFirst(Type x){
+    public void addFirst(T x){
         size += 1;
         Ssentinel.next = new Node(Ssentinel, x, Ssentinel.next);
         Ssentinel.next.next.prev = Ssentinel.next;
     }
 
-    public void addLast(Type x){
+    public void addLast(T x){
         size += 1;
         Esentinel.prev = new Node(Esentinel.prev, x, Esentinel);
         Esentinel.prev.prev.next = Esentinel.prev;
@@ -80,31 +80,31 @@ public class LinkedListDeque<Type>{
         }
     }
 
-    public Type removeFirst(){
+    public T removeFirst(){
         if(this.isempty())
             return null;
 
         size -= 1;
-        Type firstitem = Ssentinel.next.item;
+        T firstitem = Ssentinel.next.item;
         Ssentinel.next = Ssentinel.next.next;
         Ssentinel.next.prev = Ssentinel;
         return firstitem;
     }
 
-    public Type removeLast(){
+    public T removeLast(){
         if(this.isempty()){
             return null;
         }
 
         size -= 1;
-        Type lastitem = Esentinel.prev.item;
+        T lastitem = Esentinel.prev.item;
         Esentinel.prev = Esentinel.prev.prev;
         Esentinel.prev.next = Esentinel;
         return lastitem;
     }
 
     /* return the ith item of the deque */
-    public Type get(int index){
+    public T get(int index){
         // return null if index > length-1
         int length = size;
         if(index>length-1)
@@ -116,7 +116,7 @@ public class LinkedListDeque<Type>{
         return p.next.item;
     }
 
-    public Type getRecursive(int index){
+    public T getRecursive(int index){
         int length = size;
         if(index>length-1)
             return null;
@@ -125,7 +125,7 @@ public class LinkedListDeque<Type>{
 
     }
 
-    private Type traverse(Node n, int i){
+    private T traverse(Node n, int i){
         if(i==0){
             return n.item;
         }
@@ -133,7 +133,7 @@ public class LinkedListDeque<Type>{
             return traverse(n.next,i-1);
         }
     }
-
+/**
     public static void main(String[] args) {
         LinkedListDeque<Integer> Dllist = new LinkedListDeque<>();
         Dllist.addFirst(666);
@@ -167,5 +167,5 @@ public class LinkedListDeque<Type>{
         System.out.println(Dllist.getRecursive(0)); // expected 6666
         System.out.println(Dllist.getRecursive(1)); // expected null
     }
-
+*/
 }
