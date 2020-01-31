@@ -1,6 +1,6 @@
-public class ArrayDeque<Type> {
+public class ArrayDeque<T> {
     private int size;
-    private Type[] items;
+    private T[] items;
     private double usage;
     private int nextFirst;
     private int nextLast;
@@ -12,7 +12,7 @@ public class ArrayDeque<Type> {
     public ArrayDeque(){
         // create an empty ArrayDeque  (circular array)
         size = 0;
-        items = (Type[]) new Object[initsize];
+        items = (T[]) new Object[initsize];
         usage = 0;
         nextFirst = 3;
         nextLast = nextFirst + 1;
@@ -41,7 +41,7 @@ public class ArrayDeque<Type> {
                 targetLength = items.length*eFactor;
 
             //start copy
-            Type[] a = (Type[]) new Object[targetLength];
+            T[] a = (T[]) new Object[targetLength];
             for (int i=0; i<size;i++){
                 a[i] = items[(nextFirst+1+i)%items.length];
             }
@@ -67,7 +67,7 @@ public class ArrayDeque<Type> {
         return size;
     }
 
-    public Type get(int i){
+    public T get(int i){
         return items[(nextFirst+1+i)%items.length];
     }
 
@@ -75,7 +75,7 @@ public class ArrayDeque<Type> {
         return size==0;
     }
 
-    public void addFirst(Type x){
+    public void addFirst(T x){
         resize();
         items[nextFirst] = x;
         //update nextfirst size usage
@@ -85,7 +85,7 @@ public class ArrayDeque<Type> {
 
     }
 
-    public void addLast(Type x){
+    public void addLast(T x){
         resize();
         items[nextLast] = x;
         //update
@@ -95,7 +95,7 @@ public class ArrayDeque<Type> {
     }
 
 
-    public Type removeFirst(){
+    public T removeFirst(){
         if (isEmpty())
             return null;
         resize();
@@ -104,11 +104,11 @@ public class ArrayDeque<Type> {
         nextFirst = (nextFirst + 1)%items.length;
         updateUsage();
         items[nextFirst] = null;
-        Type x = items[nextFirst];
+        T x = items[nextFirst];
         return x;
     }
 
-    public Type removeLast(){
+    public T removeLast(){
         if (isEmpty())
             return null;
         resize();
@@ -117,8 +117,24 @@ public class ArrayDeque<Type> {
         nextLast = (nextLast-1+items.length)%items.length;
         updateUsage();
         items[nextLast] = null;
-        Type x = items[nextLast];
+        T x = items[nextLast];
         return x;
+    }
+
+    /** printDeque */
+    public void printDeque() {
+        /* As in resize  */
+        int oldIndex = nextFirst + 1;
+        int count = 0;
+        String str = "";
+        while (count < size) {
+            T val = items[oldIndex % items.length];
+            str += count == size - 1 ? val : (val + " ");
+            oldIndex++;
+            count++;
+        }
+        System.out.println(str);
+        // return str;
     }
 
 }
